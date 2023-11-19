@@ -3,9 +3,15 @@ set -e
 # source: https://developer.android.com/reference/android/database/sqlite/package-summary
 # and manually added recent versions 3.39.2 (api 34)
 SQLITE_VERSIONS="3.8.0 3.9.0 3.18.0 3.19.0 3.22.0 3.28.0 3.32.0 3.39.2 3.43.2"
-BINARIES=$1
+SQLITE_SRC=$1
+BINARIES=$2
+CURRENT_DIR=`pwd`
+echo $SQLITE_SRC
 echo $BINARIES
 mkdir -p $BINARIES
+cd $SQLITE_SRC
+echo "Updting sources"
+git pull
 echo Building...
 for SQLITE_VERSION in $SQLITE_VERSIONS; do
     echo $SQLITE_VERSION
@@ -26,3 +32,4 @@ for SQLITE_VERSION in $SQLITE_VERSIONS; do
     fi
 done
 git clean -dfx
+cd $CURRENT_DIR
